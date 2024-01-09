@@ -626,6 +626,10 @@ video {
   margin-top: 1rem;
 }
 
+.mb-\[160px\] {
+  margin-bottom: 160px;
+}
+
 .block {
   display: block;
 }
@@ -676,6 +680,10 @@ video {
 
 .basis-full {
   flex-basis: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .flex-col {

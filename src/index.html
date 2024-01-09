@@ -9,11 +9,11 @@
     Eiffage : Forum de recrutement
   </title>
 </head>
-<body style="background: rgba(255,255,255,.75)">
+<body>
   <div class="h-auto md:h-screen w-screen flex">
     <div class="container h-full relative z-20 items-center m-auto">
       <div class="flex flex-col items-center justify-center h-full">
-        <div class="intro-text text-center relative z-20 mb-10">
+        <div class="intro-text text-center relative z-20 mb-[160px]">
           <img src="../dist/img/logo.png" class="m-auto" />
           <h1 class="text-3xl font-serif mb-1">
             <span style="color:#FF0000">Bienvenue</span> <br />
@@ -24,11 +24,11 @@
           <h1 class="text-3xl font-serif mb-1">
             Eiffage Énergie Systèmes recrute sur Monaco, Nice et sa région.
           </h1>
+          <div class="relative z-40">
+            <a href="#" class="rounded-lg text-2xl text-white font-bold px-10 py-4 block hover:scale-105 transition-all inline-block" style="background: #FF0000">Déposer mon CV</a>
+          </div>
         </div>
-        <div class="relative z-40">
-          <a href="#" class="rounded-lg text-2xl text-white font-bold px-10 py-4 block hover:scale-105 transition-all" style="background: #FF0000">Déposer mon CV</a>
-        </div>
-        <div class="absolute bottom-4 text-center">
+        <div class="absolute bottom-4 hover:scale-105 transition-all cursor-pointer text-center" onclick="WA.ui.modal.closeModal();">
           <p class="mb-2 mt-10 text-2xl">
             Vous souhaitez mieux nous connaître ?
           </p>
