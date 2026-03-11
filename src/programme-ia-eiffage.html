@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme – Décrypter l'IA | Eiffage Énergie Systèmes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #3aaa35;
+      --black: #1a1a1a;
+      --white: #ffffff;
+      --light-gray: #f4f4f4;
+      --mid-gray: #e0e0e0;
+      --text-gray: #555;
+
+      /* Stand colors */
+      --s1: #e63329;
+      --s2: #3b5bdb;
+      --s3: #f5a623;
+      --s4: #3aaa35;
+      --s5: #7c4dff;
+      --s6: #ff6d00;
+      --s7: #4a4a4a;
+      --s8: #2c2c2c;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: #ececec;
+      color: var(--black);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      background: var(--white);
+      width: 100%;
+      max-width: 720px;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      background: var(--green);
+      padding: 2.2rem 2rem 1.8rem;
+      text-align: center;
+    }
+
+    .header-inner {
+      display: inline-block;
+      background: var(--black);
+      padding: 0.3rem 1.6rem 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 4.2rem);
+      letter-spacing: 0.03em;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header .subtitle {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 1.4rem;
+      text-transform: none;
+    }
+
+    /* ─── TOP SCHEDULE ─── */
+    .top-schedule {
+      border-bottom: 2px solid var(--mid-gray);
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--mid-gray);
+    }
+
+    .schedule-row:last-child { border-bottom: none; }
+
+    .schedule-row .time {
+      padding: 0.75rem 1.2rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-right: 1px solid var(--mid-gray);
+    }
+
+    .schedule-row .label {
+      padding: 0.75rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-right: 1px solid var(--mid-gray);
+    }
+
+    .schedule-row .location {
+      padding: 0.75rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text-gray);
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      background: var(--green);
+      color: var(--white);
+      text-align: center;
+      padding: 0.6rem 1rem 0.45rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .timeslots {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 0.4rem;
+    }
+
+    .timeslot {
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.22rem 0.7rem;
+      border-radius: 2px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── ATELIERS ─── */
+    .ateliers {
+      border-bottom: 2px solid var(--mid-gray);
+    }
+
+    .atelier-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--mid-gray);
+      gap: 1rem;
+    }
+
+    .atelier-row:last-child { border-bottom: none; }
+
+    .atelier-row .atelier-title {
+      font-weight: 700;
+      font-size: 0.97rem;
+      line-height: 1.3;
+    }
+
+    .atelier-row .atelier-presenter {
+      font-size: 0.78rem;
+      color: var(--text-gray);
+      font-style: italic;
+      margin-top: 0.15rem;
+    }
+
+    .atelier-badge {
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      white-space: nowrap;
+      border-radius: 2px;
+    }
+
+    /* ─── STANDS SECTION HEADER ─── */
+    .stands-header {
+      background: var(--green);
+      color: var(--white);
+      text-align: center;
+      padding: 0.6rem 1rem 0.45rem;
+    }
+
+    .stands-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .stands-header .stands-time {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.2rem;
+      opacity: 0.9;
+    }
+
+    /* ─── STANDS GRID ─── */
+    .stands-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stands-category {
+      border-right: 1px solid var(--mid-gray);
+    }
+
+    .stands-category:last-child { border-right: none; }
+
+    .category-label {
+      background: #2d6a29;
+      color: var(--white);
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 0.5rem;
+      writing-mode: horizontal-tb;
+    }
+
+    .stand-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.7rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--mid-gray);
+      align-items: start;
+    }
+
+    .stand-item:last-child { border-bottom: none; }
+
+    .stand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.22rem 0.55rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .stand-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+
+    .stand-presenter {
+      font-size: 0.72rem;
+      color: var(--text-gray);
+      font-style: italic;
+      margin-top: 0.15rem;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 1rem 1.4rem;
+      border-top: 2px solid var(--mid-gray);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-icon svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .logo-text {
+      line-height: 1.1;
+    }
+
+    .logo-text .brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-transform: uppercase;
+    }
+
+    .logo-text .sub {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-gray);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 520px) {
+      body { padding: 0; }
+
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .schedule-row {
+        grid-template-columns: 1fr 2fr;
+      }
+
+      .schedule-row .location {
+        display: none;
+      }
+
+      .schedule-row:first-child .location {
+        display: block;
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--mid-gray);
+        border-right: none;
+        text-align: left;
+        padding-left: 1.2rem;
+        background: var(--light-gray);
+        font-size: 0.8rem;
+      }
+
+      .stands-container {
+        grid-template-columns: 1fr;
+      }
+
+      .stands-category {
+        border-right: none;
+        border-bottom: 2px solid var(--mid-gray);
+      }
+
+      .stands-category:last-child { border-bottom: none; }
+
+      .atelier-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+      }
+
+      .atelier-badge {
+        align-self: flex-start;
+        display: inline-block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-inner">
+        <h1>Programme</h1>
+      </div>
+      <div>
+        <span class="subtitle">Décrypter l'IA</span>
+      </div>
+    </div>
+
+    <!-- TOP SCHEDULE -->
+    <div class="top-schedule">
+      <div class="schedule-row">
+        <div class="time">9h – 9h15</div>
+        <div class="label">Accueil</div>
+        <div class="location" rowspan="2">Place centrale</div>
+      </div>
+      <div class="schedule-row">
+        <div class="time">9h15 – 9h30</div>
+        <div class="label">Plénière d'ouverture</div>
+        <div class="location">Place centrale</div>
+      </div>
+    </div>
+
+    <!-- COMPOSE YOUR PROGRAMME -->
+    <div style="text-align:center; padding: 0.6rem 1rem; border-bottom: 1px solid var(--mid-gray);">
+      <span style="color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing:0.03em;">Composez votre programme</span>
+    </div>
+
+    <!-- ATELIERS HEADER -->
+    <div class="section-header">
+      <h2>Sessions d'ateliers</h2>
+      <div class="timeslots">
+        <span class="timeslot">9h50 – 10h20</span>
+        <span class="timeslot">10h40 – 11h10</span>
+        <span class="timeslot">11h30 – 12h</span>
+      </div>
+    </div>
+
+    <!-- ATELIERS -->
+    <div class="ateliers">
+      <div class="atelier-row">
+        <div>
+          <div class="atelier-title">Augmenter nos offres clients avec de l'IA</div>
+          <div class="atelier-presenter">Suzy Maddah, data scientist</div>
+        </div>
+        <div class="atelier-badge">Atelier 1</div>
+      </div>
+      <div class="atelier-row">
+        <div>
+          <div class="atelier-title">Utiliser des assistants et agents Chat Eiffage</div>
+          <div class="atelier-presenter">Louis Caron, DSI Eiffage</div>
+        </div>
+        <div class="atelier-badge">Atelier 2</div>
+      </div>
+      <div class="atelier-row">
+        <div>
+          <div class="atelier-title">Identifier quelles IA pour quels usages</div>
+          <div class="atelier-presenter">Zaïd Affejay, data scientist</div>
+        </div>
+        <div class="atelier-badge">Atelier 3</div>
+      </div>
+    </div>
+
+    <!-- STANDS HEADER -->
+    <div class="stands-header">
+      <h2>Stands permanents</h2>
+      <div class="stands-time">9h30 – 12h30</div>
+    </div>
+
+    <!-- STANDS -->
+    <div class="stands-container">
+
+      <!-- Performance opérationnelle -->
+      <div class="stands-category">
+        <div class="category-label">Performance<br>opérationnelle</div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s1);">Stand 1</span>
+          <div>
+            <div class="stand-title">Analyse et matrice des exigences du contrat</div>
+            <div class="stand-presenter">Alexandre Gaudin, directeur de projet</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s2);">Stand 2</span>
+          <div>
+            <div class="stand-title">GMAO : création des demandes d'intervention de maintenance clients</div>
+            <div class="stand-presenter">Louis Carteron, data scientist</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s3);">Stand 3</span>
+          <div>
+            <div class="stand-title">Veille stratégique</div>
+            <div class="stand-presenter">Florent Gastaut, responsable performance énergétique</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s4);">Stand 4</span>
+          <div>
+            <div class="stand-title">Partage d'expertises via Ask4themoon</div>
+            <div class="stand-presenter">Jules Bozouklian, responsable technique cybersécurité</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offres clients -->
+      <div class="stands-category">
+        <div class="category-label">Offres<br>clients</div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s5);">Stand 5</span>
+          <div>
+            <div class="stand-title">Diagnostic automatique des rails</div>
+            <div class="stand-presenter">Antoine Simonneau, data scientist</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s6);">Stand 6</span>
+          <div>
+            <div class="stand-title">Optimisation énergétique</div>
+            <div class="stand-presenter">Eric Boulvard, directeur d'agences</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s7);">Stand 7</span>
+          <div>
+            <div class="stand-title">Recherche documentaire hors-ligne</div>
+            <div class="stand-presenter">Jean-Philippe Laroche, ingénieur technico-commercial</div>
+          </div>
+        </div>
+
+        <div class="stand-item">
+          <span class="stand-badge" style="background:var(--s8);">Stand 8</span>
+          <div>
+            <div class="stand-title">Vidéosurveillance augmentée</div>
+            <div class="stand-presenter">Laurent Verlaguet, directeur de filiale</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER / LOGO -->
+    <div class="footer">
+      <div class="logo-icon">
+        <!-- Eiffage logo approximation in SVG -->
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="4" width="8" height="28" fill="#3aaa35"/>
+          <rect x="10" y="4" width="8" height="8" fill="#3aaa35"/>
+          <rect x="10" y="14" width="8" height="6" fill="#3aaa35"/>
+          <rect x="20" y="4" width="16" height="28" fill="#3aaa35"/>
+          <rect x="10" y="24" width="8" height="8" fill="#3aaa35"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="brand">Eiffage</div>
+        <div class="sub">Énergie Systèmes</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
