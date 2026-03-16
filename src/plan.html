@@ -165,9 +165,12 @@
             padding: 12px 16px;
             background: rgba(245,245,245,0.6);
             backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .fixed-cta a {
-            display: block;
+        .fixed-cta button {
+
             background: #111;
             color: #fff;
             text-align: center;
@@ -260,7 +263,7 @@
 
 <!-- FIXED BOTTOM BUTTON -->
 <div class="fixed-cta">
-    <a href="#" onclick="WA.ui.modal.closeModal();return false;">Fermer l'aide</a>
+    <button onclick="WA.ui.modal.closeModal()" style="display: block">Fermer l'aide</button>
 </div>
 
 </body>
